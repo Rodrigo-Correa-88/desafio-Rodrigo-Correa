@@ -20,9 +20,33 @@
             return;
         }
 
-       
-        return "";
+        if (itens.length === 0) {
+            console.log("Não há itens no carrinho de compra!");
+            return;
+        }
 
+        let total = 0;
+
+        for (const item of itens) {
+            const [codigo, quantidade] = item.split(',');
+            
+            if (!this.cardapio.hasOwnProperty(codigo)) {
+                return "Item inválido!";
+            }
+
+            const itemInfo = this.cardapio[codigo];
+            total += itemInfo.valor * quantidade;
+        }
+
+        if (metodosDePagamento === 'dinheiro') {
+            total *= 0.95;
+        } else if (metodosDePagamento === 'credito') {
+            total *= 1.03;
+        }
+
+        console.log(`R$ ${total.toFixed(2).replace('.', ',')}`);
+        return;     
+        
     }
 
 }
